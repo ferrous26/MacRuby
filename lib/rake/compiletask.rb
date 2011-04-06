@@ -3,7 +3,10 @@
 require 'rake'
 require 'rake/tasklib'
 require 'rbconfig'
-load File.join(RbConfig::CONFIG['bindir'], 'macrubyc')
+
+unless Kernel.const_defined? :Compiler
+  load File.join(RbConfig::CONFIG['bindir'], 'macrubyc')
+end
 
 module Rake
 

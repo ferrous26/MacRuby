@@ -31,12 +31,13 @@ module Rake
     # Whether to list each file that is compiled or not (defaults is false)
     attr_accessor :verbose
 
+    # A hash of additional options to pass to the MacRuby compiler
+    attr_accessor :compile_opts
+
     # Explicitly define the list of test files to be compiled.
     # +list+ is expected to be an array of file names (a
     # FileList is acceptable).
-    def files=(list)
-      @files = list
-    end
+    attr_accessor :files
 
     # Create a testing task.
     def initialize(name=:compile)

@@ -44,7 +44,7 @@ def build_objects
     sh "echo '' > #{kernel_data_c}"
     cflags = $builder.cflags.scan(/-I[^\s]+/).join(' ')
     cflags << ' ' << $builder.cflags.scan(/-D[^\s]+/).join(' ')
-    $builder.archs.each do |x| 
+    $builder.archs.each do |x|
       output = File.join($builder.objsdir, "kernel-#{x}.bc")
       # Compile the IR for the kernel.c source file & optimize it.
       sh "#{llvm_gcc} -arch #{x} -fexceptions -fno-stack-protector -fwrapv #{cflags} --emit-llvm -c kernel.c -o #{output}"
@@ -163,16 +163,11 @@ AOT_STDLIB = [
 namespace :stdlib do
   desc "AOT compile the stdlib"
   task :build => [:miniruby, 'macruby:dylib'] do
-    archf = ARCHS.map { |x| "--arch #{x}" }.join(' ')
-    commands = (COMPILE_STDLIB ? AOT_STDLIB : %w{ rbconfig.rb }).map do |pattern|
-      Dir.glob(pattern).map do |path|
-        out = File.join(File.dirname(path), File.basename(path, '.rb') + '.rbo')
-        if !File.exist?(out) or File.mtime(path) > File.mtime(out) or File.mtime('./miniruby') > File.mtime(out)
-          "./miniruby -I. -I./lib bin/rubyc --internal #{archf} -C \"#{path}\" -o \"#{out}\""
-        end
-      end
-    end.flatten.compact
-    Builder.parallel_execute(commands)
+    libs = (COMPILE_STDLIB ? AOT_STDLIB : %w{ rbconfig.rb }).map { |lib|
+      Dir.glob(lib).join(' ')
+    }.join(' ')
+    command = "./miniruby -I. -I./lib compile_stdlib.rb '#{ARCHS.join(' ')}' #{libs}"
+    Builder.parallel_execute([command])
   end
 end
 

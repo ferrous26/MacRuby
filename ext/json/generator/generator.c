@@ -903,7 +903,7 @@ static void generate_json(FBuffer *buffer, VALUE Vstate, JSON_Generator_State *s
         Check_Type(tmp, T_STRING);
         fbuffer_append(buffer, RSTRING_PAIR(tmp));
     } else {
-        tmp = rb_funcall(obj, i_to_s, 0);
+        tmp = rb_funcall(rb_mKernel, rb_intern("String"), 1, obj);
         Check_Type(tmp, T_STRING);
         generate_json(buffer, Vstate, state, tmp);
     }

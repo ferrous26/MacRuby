@@ -2937,6 +2937,18 @@ rb_class_is_meta(VALUE klass, SEL sel)
     return RCLASS_META(klass) ? Qtrue : Qfalse;
 }
 
+static VALUE
+rb_obj_singleton_class(VALUE obj)
+{
+    switch(TYPE(obj)) {
+    case T_CLASS:
+    case T_MODULE:
+      return Qnil;
+    default:
+      return rb_singleton_class(obj);
+    }
+}
+
 /*
  *  Document-class: Class
  *
@@ -3114,6 +3126,7 @@ Init_Object(void)
 
     VALUE rb_obj_singleton_methods(VALUE obj, SEL sel, int argc, VALUE *argv);
     rb_objc_define_method(rb_mKernel, "singleton_methods", rb_obj_singleton_methods, -1); /* in class.c */
+    rb_objc_define_method(rb_cObject, "singleton_class", rb_obj_singleton_class, 0);
     rb_objc_define_method(rb_mKernel, "protected_methods", rb_obj_protected_methods, -1);
     rb_objc_define_method(rb_mKernel, "private_methods", rb_obj_private_methods, -1);
     rb_objc_define_method(rb_mKernel, "public_methods", rb_obj_public_methods, -1);

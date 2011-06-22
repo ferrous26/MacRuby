@@ -1,8 +1,8 @@
-/* 
+/*
  * MacRuby implementation of Ruby 1.9's object.c.
  *
  * This file is covered by the Ruby license. See COPYING for more details.
- * 
+ *
  * Copyright (C) 2007-2011, Apple Inc. All rights reserved.
  * Copyright (C) 1993-2007 Yukihiro Matsumoto
  * Copyright (C) 2000 Network Applied Communication Laboratory, Inc.
@@ -53,7 +53,7 @@ rb_send_dup(VALUE obj)
 /*
  *  call-seq:
  *     obj === other   => true or false
- *  
+ *
  *  Case Equality---For class <code>Object</code>, effectively the same
  *  as calling  <code>#==</code>, but typically overridden by descendents
  *  to provide meaningful semantics in <code>case</code> statements.
@@ -106,7 +106,7 @@ rb_eql(VALUE obj1, VALUE obj2)
  *     obj == other        => true or false
  *     obj.equal?(other)   => true or false
  *     obj.eql?(other)     => true or false
- *  
+ *
  *  Equality---At the <code>Object</code> level, <code>==</code> returns
  *  <code>true</code> only if <i>obj</i> and <i>other</i> are the
  *  same object. Typically, this method is overridden in descendent
@@ -125,7 +125,7 @@ rb_eql(VALUE obj1, VALUE obj2)
  *  there are exceptions. <code>Numeric</code> types, for example,
  *  perform type conversion across <code>==</code>, but not across
  *  <code>eql?</code>, so:
- *     
+ *
  *     1 == 1.0     #=> true
  *     1.eql? 1.0   #=> false
  */
@@ -172,13 +172,13 @@ rb_obj_not_equal(VALUE obj1, SEL sel, VALUE obj2)
 /*
  *  call-seq:
  *     obj.class    => class
- *  
+ *
  *  Returns the class of <i>obj</i>, now preferred over
  *  <code>Object#type</code>, as an object's type in Ruby is only
  *  loosely tied to that object's class. This method must always be
  *  called with an explicit receiver, as <code>class</code> is also a
  *  reserved word in Ruby.
- *     
+ *
  *     1.class      #=> Fixnum
  *     self.class   #=> Object
  */
@@ -246,12 +246,12 @@ init_copy(VALUE dest, VALUE obj)
 /*
  *  call-seq:
  *     obj.clone -> an_object
- *  
+ *
  *  Produces a shallow copy of <i>obj</i>---the instance variables of
  *  <i>obj</i> are copied, but not the objects they reference. Copies
  *  the frozen and tainted state of <i>obj</i>. See also the discussion
  *  under <code>Object#dup</code>.
- *     
+ *
  *     class Klass
  *        attr_accessor :str
  *     end
@@ -321,7 +321,7 @@ rb_obj_clone(VALUE obj)
 /*
  *  call-seq:
  *     obj.dup -> an_object
- *  
+ *
  *  Produces a shallow copy of <i>obj</i>---the instance variables of
  *  <i>obj</i> are copied, but not the objects they reference.
  *  <code>dup</code> copies the tainted state of <i>obj</i>. See also
@@ -381,7 +381,7 @@ rb_nsobj_dup(VALUE obj, VALUE sel)
 {
     VALUE klass = rb_class_real(CLASS_OF(obj), true);
     if (class_respondsToSelector((Class)klass, selCopyWithZone)) {
-	return (VALUE)objc_msgSend((id)obj, selCopy); 
+	return (VALUE)objc_msgSend((id)obj, selCopy);
     }
 
     VALUE copy = rb_vm_new_rb_object(klass);
@@ -392,7 +392,7 @@ rb_nsobj_dup(VALUE obj, VALUE sel)
 /*
  *  call-seq:
  *     obj.to_s    => string
- *  
+ *
  *  Returns a string representing <i>obj</i>. The default
  *  <code>to_s</code> prints the object's class and an encoding of the
  *  object id. As a special case, the top-level object that is the
@@ -464,11 +464,11 @@ inspect_obj(VALUE obj, VALUE str, int recur)
 /*
  *  call-seq:
  *     obj.inspect   => string
- *  
+ *
  *  Returns a string containing a human-readable representation of
  *  <i>obj</i>. If not overridden, uses the <code>to_s</code> method to
  *  generate the string.
- *     
+ *
  *     [ 1, 2, 3..4, 'five' ].inspect   #=> "[1, 2, 3..4, \"five\"]"
  *     Time.new.inspect                 #=> "2008-03-08 19:43:39 +0900"
  */
@@ -493,7 +493,7 @@ rb_obj_inspect(VALUE obj, SEL sel)
 /*
  *  call-seq:
  *     obj.instance_of?(class)    => true or false
- *  
+ *
  *  Returns <code>true</code> if <i>obj</i> is an instance of the given
  *  class. See also <code>Object#kind_of?</code>.
  */
@@ -526,11 +526,11 @@ rb_obj_is_instance_of_imp(VALUE obj, SEL sel, VALUE c)
  *  call-seq:
  *     obj.is_a?(class)       => true or false
  *     obj.kind_of?(class)    => true or false
- *  
+ *
  *  Returns <code>true</code> if <i>class</i> is the class of
  *  <i>obj</i>, or if <i>class</i> is one of the superclasses of
  *  <i>obj</i> or modules included in <i>obj</i>.
- *     
+ *
  *     module M;    end
  *     class A
  *       include M
@@ -610,7 +610,7 @@ rb_obj_is_kind_of_imp(VALUE obj, SEL sel, VALUE c)
 /*
  *  call-seq:
  *     obj.tap{|x|...}    => obj
- *  
+ *
  *  Yields <code>x</code> to the block, and then returns <code>x</code>.
  *  The primary purpose of this method is to "tap into" a method chain,
  *  in order to perform operations on intermediate results within the chain.
@@ -663,10 +663,10 @@ rb_obj_tap(VALUE obj, SEL sel)
  *
  *  call-seq:
  *     singleton_method_added(symbol)
- *  
+ *
  *  Invoked as a callback whenever a singleton method is added to the
  *  receiver.
- *     
+ *
  *     module Chatty
  *       def Chatty.singleton_method_added(id)
  *         puts "Adding #{id.id2name}"
@@ -675,13 +675,13 @@ rb_obj_tap(VALUE obj, SEL sel)
  *       def two()          end
  *       def Chatty.three() end
  *     end
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     Adding singleton_method_added
  *     Adding one
  *     Adding three
- *     
+ *
  */
 
 /*
@@ -689,10 +689,10 @@ rb_obj_tap(VALUE obj, SEL sel)
  *
  *  call-seq:
  *     singleton_method_removed(symbol)
- *  
+ *
  *  Invoked as a callback whenever a singleton method is removed from
  *  the receiver.
- *     
+ *
  *     module Chatty
  *       def Chatty.singleton_method_removed(id)
  *         puts "Removing #{id.id2name}"
@@ -705,9 +705,9 @@ rb_obj_tap(VALUE obj, SEL sel)
  *         remove_method :one
  *       end
  *     end
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     Removing three
  *     Removing one
  */
@@ -717,10 +717,10 @@ rb_obj_tap(VALUE obj, SEL sel)
  *
  *  call-seq:
  *     singleton_method_undefined(symbol)
- *  
+ *
  *  Invoked as a callback whenever a singleton method is undefined in
  *  the receiver.
- *     
+ *
  *     module Chatty
  *       def Chatty.singleton_method_undefined(id)
  *         puts "Undefining #{id.id2name}"
@@ -730,9 +730,9 @@ rb_obj_tap(VALUE obj, SEL sel)
  *          undef_method(:one)
  *       end
  *     end
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     Undefining one
  */
 
@@ -783,7 +783,7 @@ static st_table *immediate_flags_tbl = 0;
 /*
  *  call-seq:
  *     obj.tainted?    => true or false
- *  
+ *
  *  Returns <code>true</code> if the object is tainted.
  */
 
@@ -837,7 +837,7 @@ rb_obj_tainted(VALUE obj)
 /*
  *  call-seq:
  *     obj.taint -> obj
- *  
+ *
  *  Marks <i>obj</i> as tainted---if the <code>$SAFE</code> level is
  *  set appropriately, many method calls which might alter the running
  *  programs environment will refuse to accept tainted strings.
@@ -899,7 +899,7 @@ rb_obj_taint_m(VALUE obj, SEL sel)
     return obj;
 }
 
-VALUE 
+VALUE
 rb_obj_taint(VALUE obj)
 {
     return rb_obj_taint_m(obj, 0);
@@ -909,7 +909,7 @@ rb_obj_taint(VALUE obj)
 /*
  *  call-seq:
  *     obj.untaint    => obj
- *  
+ *
  *  Removes the taint from <i>obj</i>.
  */
 
@@ -934,7 +934,7 @@ rb_obj_untaint_m(VALUE obj, SEL sel)
 		if (rb_klass_is_rary(*(VALUE *)obj)) {
 		    RBASIC(obj)->flags &= ~FL_TAINT;
 		    break;
-		}	
+		}
 		// fall through
 	    case T_STRING:
 		if (rb_klass_is_rstr(*(VALUE *)obj)) {
@@ -982,7 +982,7 @@ rb_obj_untrusted_imp(VALUE obj, SEL sel)
     else if (NATIVE(obj)) {
 	switch (TYPE(obj)) {
 	    case T_SYMBOL:
-		return Qfalse;	
+		return Qfalse;
 	    case T_ARRAY:
 		if (rb_klass_is_rary(*(VALUE *)obj)) {
 		    return RBASIC(obj)->flags & FL_UNTRUSTED ? Qtrue : Qfalse;
@@ -1146,18 +1146,18 @@ rb_obj_infect(VALUE obj1, VALUE obj2)
 /*
  *  call-seq:
  *     obj.freeze    => obj
- *  
+ *
  *  Prevents further modifications to <i>obj</i>. A
  *  <code>TypeError</code> will be raised if modification is attempted.
  *  There is no way to unfreeze a frozen object. See also
  *  <code>Object#frozen?</code>.
- *     
+ *
  *     a = [ "a", "b", "c" ]
  *     a.freeze
  *     a << "z"
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     prog.rb:3:in `<<': can't modify frozen array (TypeError)
  *     	from prog.rb:3
  */
@@ -1176,7 +1176,7 @@ immediate:
 		immediate_flags_tbl = st_init_numtable();
 	 	GC_RETAIN(immediate_flags_tbl);
 		st_insert(immediate_flags_tbl, obj, (st_data_t)FL_FREEZE);
-	    } 
+	    }
 	    else {
 		VALUE flags = 0;
 		st_lookup(immediate_flags_tbl, obj, &flags);
@@ -1230,9 +1230,9 @@ rb_obj_freeze(VALUE obj)
 /*
  *  call-seq:
  *     obj.frozen?    => true or false
- *  
+ *
  *  Returns the freeze status of <i>obj</i>.
- *     
+ *
  *     a = [ "a", "b", "c" ]
  *     a.freeze    #=> ["a", "b", "c"]
  *     a.frozen?   #=> true
@@ -1297,9 +1297,9 @@ rb_obj_frozen_p(VALUE obj)
 /*
  *  call-seq:
  *     nil.to_i => 0
- *  
+ *
  *  Always returns zero.
- *     
+ *
  *     nil.to_i   #=> 0
  */
 
@@ -1313,9 +1313,9 @@ nil_to_i(VALUE obj, SEL sel)
 /*
  *  call-seq:
  *     nil.to_f    => 0.0
- *  
+ *
  *  Always returns zero.
- *     
+ *
  *     nil.to_f   #=> 0.0
  */
 
@@ -1328,7 +1328,7 @@ nil_to_f(VALUE obj, SEL sel)
 /*
  *  call-seq:
  *     nil.to_s    => ""
- *  
+ *
  *  Always returns the empty string.
  */
 
@@ -1343,9 +1343,9 @@ nil_to_s(VALUE obj, SEL sel)
  *
  *  call-seq:
  *     nil.to_a    => []
- *  
+ *
  *  Always returns an empty array.
- *     
+ *
  *     nil.to_a   #=> []
  */
 
@@ -1395,7 +1395,7 @@ true_to_s(VALUE obj, SEL sel)
 /*
  *  call-seq:
  *     true & obj    => true or false
- *  
+ *
  *  And---Returns <code>false</code> if <i>obj</i> is
  *  <code>nil</code> or <code>false</code>, <code>true</code> otherwise.
  */
@@ -1409,16 +1409,16 @@ true_and(VALUE obj, SEL sel, VALUE obj2)
 /*
  *  call-seq:
  *     true | obj   => true
- *  
+ *
  *  Or---Returns <code>true</code>. As <i>anObject</i> is an argument to
  *  a method call, it is always evaluated; there is no short-circuit
  *  evaluation in this case.
- *     
+ *
  *     true |  puts("or")
  *     true || puts("logical or")
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     or
  */
 
@@ -1432,7 +1432,7 @@ true_or(VALUE obj, SEL sel, VALUE obj2)
 /*
  *  call-seq:
  *     true ^ obj   => !obj
- *  
+ *
  *  Exclusive Or---Returns <code>true</code> if <i>obj</i> is
  *  <code>nil</code> or <code>false</code>, <code>false</code>
  *  otherwise.
@@ -1452,7 +1452,7 @@ true_xor(VALUE obj, SEL sel, VALUE obj2)
  *  <code>FalseClass</code> and represents a logically false value in
  *  boolean expressions. The class provides operators allowing
  *  <code>false</code> to participate correctly in logical expressions.
- *     
+ *
  */
 
 /*
@@ -1472,7 +1472,7 @@ false_to_s(VALUE obj, SEL sel)
  *  call-seq:
  *     false & obj   => false
  *     nil & obj     => false
- *  
+ *
  *  And---Returns <code>false</code>. <i>obj</i> is always
  *  evaluated as it is the argument to a method call---there is no
  *  short-circuit evaluation in this case.
@@ -1489,7 +1489,7 @@ false_and(VALUE obj, SEL sel, VALUE obj2)
  *  call-seq:
  *     false | obj   =>   true or false
  *     nil   | obj   =>   true or false
- *  
+ *
  *  Or---Returns <code>false</code> if <i>obj</i> is
  *  <code>nil</code> or <code>false</code>; <code>true</code> otherwise.
  */
@@ -1504,11 +1504,11 @@ false_or(VALUE obj, SEL sel, VALUE obj2)
  *  call-seq:
  *     false ^ obj    => true or false
  *     nil   ^ obj    => true or false
- *  
+ *
  *  Exclusive Or---If <i>obj</i> is <code>nil</code> or
  *  <code>false</code>, returns <code>false</code>; otherwise, returns
  *  <code>true</code>.
- *     
+ *
  */
 
 static VALUE
@@ -1549,7 +1549,7 @@ rb_false(VALUE obj, SEL sel)
 /*
  *  call-seq:
  *     obj =~ other  => nil
- *  
+ *
  *  Pattern Match---Overridden by descendents (notably
  *  <code>Regexp</code> and <code>String</code>) to provide meaningful
  *  pattern-match semantics.
@@ -1564,7 +1564,7 @@ rb_obj_match(VALUE obj1, SEL sel, VALUE obj2)
 /*
  *  call-seq:
  *     obj !~ other  => nil
- *  
+ *
  *  Returns true if two objects does not match, using <i>=~</i> method.
  */
 
@@ -1595,11 +1595,11 @@ rb_obj_cmp(VALUE obj1, SEL sel, VALUE obj2)
  *  included, module methods do not. Conversely, module methods may be
  *  called without creating an encapsulating object, while instance
  *  methods may not. (See <code>Module#module_function</code>)
- *     
+ *
  *  In the descriptions that follow, the parameter <i>syml</i> refers
  *  to a symbol, which is either a quoted string or a
  *  <code>Symbol</code> (such as <code>:name</code>).
- *     
+ *
  *     module Mod
  *       include Math
  *       CONST = 1
@@ -1610,7 +1610,7 @@ rb_obj_cmp(VALUE obj1, SEL sel, VALUE obj2)
  *     Mod.class              #=> Module
  *     Mod.constants          #=> [:CONST, :PI, :E]
  *     Mod.instance_methods   #=> [:meth]
- *     
+ *
  */
 
 /*
@@ -1645,7 +1645,7 @@ rb_mod_to_s(VALUE klass, SEL sel)
     return rb_str_dup(rb_class_name(klass));
 }
 
-static VALUE 
+static VALUE
 rb_mod_included_modules_imp(VALUE recv, SEL sel)
 {
     return rb_mod_included_modules(recv);
@@ -1681,7 +1681,7 @@ rb_mod_properties_imp(VALUE self, SEL sel)
 /*
  *  call-seq:
  *     mod.freeze
- *  
+ *
  *  Prevents further modifications to <i>mod</i>.
  */
 
@@ -1695,7 +1695,7 @@ rb_mod_freeze(VALUE mod, SEL sel)
 /*
  *  call-seq:
  *     mod === obj    => true or false
- *  
+ *
  *  Case Equality---Returns <code>true</code> if <i>anObject</i> is an
  *  instance of <i>mod</i> or one of <i>mod</i>'s descendents. Of
  *  limited use for modules, but can be used in <code>case</code>
@@ -1713,9 +1713,9 @@ rb_mod_eqq(VALUE mod, SEL sel, VALUE arg)
  *   mod <= other   =>  true, false, or nil
  *
  * Returns true if <i>mod</i> is a subclass of <i>other</i> or
- * is the same as <i>other</i>. Returns 
- * <code>nil</code> if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
+ * is the same as <i>other</i>. Returns
+ * <code>nil</code> if there's no relationship between the two.
+ * (Think of the relationship in terms of the class definition:
  * "class A<B" implies "A<B").
  *
  */
@@ -1729,7 +1729,7 @@ rb_class_mixin_inherited(VALUE mod, VALUE arg)
 	    if (RARRAY_AT(ary, i) == arg) {
 		return true;
 	    }
-	} 
+	}
     }
     return false;
 }
@@ -1775,9 +1775,9 @@ rb_class_inherited_imp(VALUE mod, SEL sel, VALUE arg)
  * call-seq:
  *   mod < other   =>  true, false, or nil
  *
- * Returns true if <i>mod</i> is a subclass of <i>other</i>. Returns 
- * <code>nil</code> if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
+ * Returns true if <i>mod</i> is a subclass of <i>other</i>. Returns
+ * <code>nil</code> if there's no relationship between the two.
+ * (Think of the relationship in terms of the class definition:
  * "class A<B" implies "A<B").
  *
  */
@@ -1795,9 +1795,9 @@ rb_mod_lt(VALUE mod, SEL sel, VALUE arg)
  *   mod >= other   =>  true, false, or nil
  *
  * Returns true if <i>mod</i> is an ancestor of <i>other</i>, or the
- * two modules are the same. Returns 
- * <code>nil</code> if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
+ * two modules are the same. Returns
+ * <code>nil</code> if there's no relationship between the two.
+ * (Think of the relationship in terms of the class definition:
  * "class A<B" implies "B>A").
  *
  */
@@ -1820,9 +1820,9 @@ rb_mod_ge(VALUE mod, SEL sel, VALUE arg)
  * call-seq:
  *   mod > other   =>  true, false, or nil
  *
- * Returns true if <i>mod</i> is an ancestor of <i>other</i>. Returns 
- * <code>nil</code> if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
+ * Returns true if <i>mod</i> is an ancestor of <i>other</i>. Returns
+ * <code>nil</code> if there's no relationship between the two.
+ * (Think of the relationship in terms of the class definition:
  * "class A<B" implies "B>A").
  *
  */
@@ -1837,7 +1837,7 @@ rb_mod_gt(VALUE mod, SEL sel, VALUE arg)
 /*
  *  call-seq:
  *     mod <=> other_mod   => -1, 0, +1, or nil
- *  
+ *
  *  Comparison---Returns -1 if <i>mod</i> includes <i>other_mod</i>, 0 if
  *  <i>mod</i> is the same as <i>other_mod</i>, and +1 if <i>mod</i> is
  *  included by <i>other_mod</i> or if <i>mod</i> has no relationship with
@@ -1883,11 +1883,11 @@ rb_class_s_alloc(VALUE klass, SEL sel)
  *  call-seq:
  *    Module.new                  => mod
  *    Module.new {|mod| block }   => mod
- *  
+ *
  *  Creates a new anonymous module. If a block is given, it is passed
  *  the module object, and the block is evaluated in the context of this
  *  module using <code>module_eval</code>.
- *     
+ *
  *     Fred = Module.new do
  *       def meth1
  *         "hello"
@@ -1942,11 +1942,11 @@ rb_mod_method_signature(VALUE module, SEL sel, VALUE mid, VALUE sim)
 /*
  *  call-seq:
  *     Class.new(super_class=Object)   =>    a_class
- *  
+ *
  *  Creates a new anonymous (unnamed) class with the given superclass
  *  (or <code>Object</code> if no parameter is given). You can give a
  *  class a name by assigning the class object to a constant.
- *     
+ *
  */
 
 static VALUE
@@ -1976,10 +1976,10 @@ rb_class_initialize(int argc, VALUE *argv, VALUE klass)
 /*
  *  call-seq:
  *     class.allocate()   =>   obj
- *  
+ *
  *  Allocates space for a new object of <i>class</i>'s class. The
  *  returned object must be an instance of <i>class</i>.
- *     
+ *
  */
 
 static inline VALUE
@@ -2011,13 +2011,13 @@ rb_obj_alloc_imp(VALUE klass, SEL sel)
 /*
  *  call-seq:
  *     class.new(args, ...)    =>  obj
- *  
+ *
  *  Calls <code>allocate</code> to create a new object of
  *  <i>class</i>'s class, then invokes that object's
  *  <code>initialize</code> method, passing it <i>args</i>.
  *  This is the method that ends up getting called whenever
  *  an object is constructed using .new.
- *     
+ *
  */
 
 static inline VALUE
@@ -2059,7 +2059,7 @@ rb_class_new_instance(int argc, VALUE *argv, VALUE klass)
  *  call-seq:
  *     attr_reader(symbol, ...)    => nil
  *     attr(symbol, ...)             => nil
- *  
+ *
  *  Creates instance variables and corresponding methods that return the
  *  value of each instance variable. Equivalent to calling
  *  ``<code>attr</code><i>:name</i>'' on each name in turn.
@@ -2088,7 +2088,7 @@ rb_mod_attr(VALUE klass, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *      attr_writer(symbol, ...)    => nil
- *  
+ *
  *  Creates an accessor method to allow assignment to the attribute
  *  <i>aSymbol</i><code>.id2name</code>.
  */
@@ -2105,12 +2105,12 @@ rb_mod_attr_writer(VALUE klass, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     attr_accessor(symbol, ...)    => nil
- *  
+ *
  *  Defines a named attribute for this module, where the name is
  *  <i>symbol.</i><code>id2name</code>, creating an instance variable
  *  (<code>@name</code>) and a corresponding access method to read it.
  *  Also creates a method called <code>name=</code> to set the attribute.
- *     
+ *
  *     module Mod
  *       attr_accessor(:one, :two)
  *     end
@@ -2129,9 +2129,9 @@ rb_mod_attr_accessor(VALUE klass, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     mod.const_get(sym, inherit=true)    => obj
- *  
+ *
  *  Returns the value of the named constant in <i>mod</i>.
- *     
+ *
  *     Math.const_get(:PI)   #=> 3.14159265358979
  *
  *  If the constant is not defined or is defined by the ancestors and
@@ -2161,11 +2161,11 @@ rb_mod_const_get(VALUE mod, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     mod.const_set(sym, obj)    => obj
- *  
+ *
  *  Sets the named constant to the given object, returning that object.
  *  Creates a new constant if no constant with the given name previously
  *  existed.
- *     
+ *
  *     Math.const_set("HIGH_SCHOOL_PI", 22.0/7.0)   #=> 3.14285714285714
  *     Math::HIGH_SCHOOL_PI - Math::PI              #=> 0.00126448926734968
  */
@@ -2185,10 +2185,10 @@ rb_mod_const_set(VALUE mod, SEL sel, VALUE name, VALUE value)
 /*
  *  call-seq:
  *     mod.const_defined?(sym, inherit=true)   => true or false
- *  
+ *
  *  Returns <code>true</code> if a constant with the given name is
  *  defined by <i>mod</i>, or its ancestors if +inherit+ is not false.
- *     
+ *
  *     Math.const_defined? "PI"   #=> true
  *     IO.const_defined? "SYNC"   #=> true
  *     IO.const_defined? "SYNC", false   #=> false
@@ -2223,17 +2223,17 @@ rb_mod_remove_const_imp(VALUE mod, SEL sel, VALUE name)
 /*
  *  call-seq:
  *     obj.methods    => array
- *  
+ *
  *  Returns a list of the names of methods publicly accessible in
  *  <i>obj</i>. This will include all the methods accessible in
  *  <i>obj</i>'s ancestors.
- *     
+ *
  *     class Klass
  *       def kMethod()
  *       end
  *     end
  *     k = Klass.new
- *     k.methods[0..9]    #=> ["kMethod", "freeze", "nil?", "is_a?", 
+ *     k.methods[0..9]    #=> ["kMethod", "freeze", "nil?", "is_a?",
  *                        #    "class", "instance_variable_set",
  *                        #    "methods", "extend", "__send__", "instance_eval"]
  *     k.methods.length   #=> 42
@@ -2264,7 +2264,7 @@ rb_obj_methods(VALUE obj, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     obj.protected_methods(all=true)   => array
- *  
+ *
  *  Returns the list of protected methods accessible to <i>obj</i>. If
  *  the <i>all</i> parameter is set to <code>false</code>, only those methods
  *  in the receiver will be listed.
@@ -2287,7 +2287,7 @@ rb_obj_protected_methods(VALUE obj, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     obj.private_methods(all=true)   => array
- *  
+ *
  *  Returns the list of private methods accessible to <i>obj</i>. If
  *  the <i>all</i> parameter is set to <code>false</code>, only those methods
  *  in the receiver will be listed.
@@ -2310,7 +2310,7 @@ rb_obj_private_methods(VALUE obj, SEL sel, int argc, VALUE *argv)
 /*
  *  call-seq:
  *     obj.public_methods(all=true)   => array
- *  
+ *
  *  Returns the list of public methods accessible to <i>obj</i>. If
  *  the <i>all</i> parameter is set to <code>false</code>, only those methods
  *  in the receiver will be listed.
@@ -2339,7 +2339,7 @@ rb_obj_public_methods(VALUE obj, SEL sel, int argc, VALUE *argv)
  *  variable name should be included for regular instance
  *  variables. Throws a <code>NameError</code> exception if the
  *  supplied symbol is not valid as an instance variable name.
- *     
+ *
  *     class Fred
  *       def initialize(p1, p2)
  *         @a, @b = p1, p2
@@ -2364,12 +2364,12 @@ rb_obj_ivar_get(VALUE obj, SEL sel, VALUE iv)
 /*
  *  call-seq:
  *     obj.instance_variable_set(symbol, obj)    => obj
- *  
+ *
  *  Sets the instance variable names by <i>symbol</i> to
  *  <i>object</i>, thereby frustrating the efforts of the class's
  *  author to attempt to provide proper encapsulation. The variable
  *  did not have to exist prior to this call.
- *     
+ *
  *     class Fred
  *       def initialize(p1, p2)
  *         @a, @b = p1, p2
@@ -2424,11 +2424,11 @@ rb_obj_ivar_defined(VALUE obj, SEL sel, VALUE iv)
 /*
  *  call-seq:
  *     mod.class_variable_get(symbol)    => obj
- *  
+ *
  *  Returns the value of the given class variable (or throws a
  *  <code>NameError</code> exception). The <code>@@</code> part of the
  *  variable name should be included for regular class variables
- *     
+ *
  *     class Fred
  *       @@foo = 99
  *     end
@@ -2449,10 +2449,10 @@ rb_mod_cvar_get(VALUE obj, SEL sel, VALUE iv)
 /*
  *  call-seq:
  *     obj.class_variable_set(symbol, obj)    => obj
- *  
+ *
  *  Sets the class variable names by <i>symbol</i> to
  *  <i>object</i>.
- *     
+ *
  *     class Fred
  *       @@foo = 99
  *       def foo
@@ -2515,7 +2515,7 @@ convert_type(VALUE val, const char *tname, const char *method, int raise)
 		    NIL_P(val) ? "nil" :
 		    val == Qtrue ? "true" :
 		    val == Qfalse ? "false" :
-		    rb_obj_classname(val), 
+		    rb_obj_classname(val),
 		    tname);
 	}
 	else {
@@ -2658,7 +2658,7 @@ rb_Integer(VALUE val)
 /*
  *  call-seq:
  *     Integer(arg)    => integer
- *  
+ *
  *  Converts <i>arg</i> to a <code>Fixnum</code> or <code>Bignum</code>.
  *  Numeric types are converted directly (with floating point numbers
  *  being truncated). If <i>arg</i> is a <code>String</code>, leading
@@ -2666,7 +2666,7 @@ rb_Integer(VALUE val)
  *  <code>0x</code>) are honored. Others are converted using
  *  <code>to_int</code> and <code>to_i</code>. This behavior is
  *  different from that of <code>String#to_i</code>.
- *     
+ *
  *     Integer(123.999)    #=> 123
  *     Integer("0x1a")     #=> 26
  *     Integer(Time.new)   #=> 1204973019
@@ -2826,11 +2826,11 @@ rb_Float(VALUE val)
 /*
  *  call-seq:
  *     Float(arg)    => float
- *  
+ *
  *  Returns <i>arg</i> converted to a float. Numeric types are converted
  *  directly, the rest are converted using <i>arg</i>.to_f. As of Ruby
  *  1.8, converting <code>nil</code> generates a <code>TypeError</code>.
- *     
+ *
  *     Float(1)           #=> 1.0
  *     Float("123.456")   #=> 123.456
  */
@@ -2942,7 +2942,7 @@ rb_class_is_meta(VALUE klass, SEL sel)
  *
  *  Classes in Ruby are first-class objects---each is an instance of
  *  class <code>Class</code>.
- *     
+ *
  *  When a new class is created (typically using <code>class Name ...
  *  end</code>), an object of type <code>Class</code> is created and
  *  assigned to a global constant (<code>Name</code> in this case). When
@@ -2950,7 +2950,7 @@ rb_class_is_meta(VALUE klass, SEL sel)
  *  <code>new</code> method in <code>Class</code> is run by default.
  *  This can be demonstrated by overriding <code>new</code> in
  *  <code>Class</code>:
- *     
+ *
  *     class Class
  *        alias oldNew  new
  *        def new(*args)
@@ -2958,21 +2958,21 @@ rb_class_is_meta(VALUE klass, SEL sel)
  *          oldNew(*args)
  *        end
  *      end
- *     
- *     
+ *
+ *
  *      class Name
  *      end
- *     
- *     
+ *
+ *
  *      n = Name.new
- *     
+ *
  *  <em>produces:</em>
- *     
+ *
  *     Creating a new Name
- *     
+ *
  *  Classes, modules, and objects are interrelated. In the diagram
  *  that follows, the vertical arrows represent inheritance, and the
- *  parentheses meta-classes. All metaclasses are instances 
+ *  parentheses meta-classes. All metaclasses are instances
  *  of the class `Class'.
  *
  *                             +-----------------+
@@ -3004,13 +3004,13 @@ rb_class_is_meta(VALUE klass, SEL sel)
  *  class hierarchy is a direct subclass of <code>BasicObject</code>.  Its
  *  methods are therefore available to all objects unless explicitly
  *  overridden.
- *     
+ *
  *  <code>Object</code> mixes in the <code>Kernel</code> module, making
  *  the built-in kernel functions globally accessible. Although the
  *  instance methods of <code>Object</code> are defined by the
  *  <code>Kernel</code> module, we have chosen to document them here for
  *  clarity.
- *     
+ *
  *  In the descriptions of Object's methods, the parameter <i>symbol</i> refers
  *  to a symbol, which is either a quoted string or a
  *  <code>Symbol</code> (such as <code>:name</code>).
@@ -3087,7 +3087,7 @@ Init_Object(void)
     rb_objc_define_private_method(rb_cModule, "method_signature", rb_mod_method_signature, 2);
 
     rb_objc_define_method(rb_mKernel, "nil?", rb_false, 0);
-    rb_objc_define_method(rb_mKernel, "===", rb_equal_imp, 1); 
+    rb_objc_define_method(rb_mKernel, "===", rb_equal_imp, 1);
     rb_objc_define_method(rb_mKernel, "=~", rb_obj_match, 1);
     rb_objc_define_method(rb_mKernel, "!~", rb_obj_not_match, 1);
     rb_objc_define_method(rb_mKernel, "eql?", rb_obj_equal, 1);
@@ -3184,11 +3184,11 @@ Init_Object(void)
     rb_objc_define_private_method(rb_cModule, "attr_accessor", rb_mod_attr_accessor, -1);
 
     rb_objc_define_method(rb_cModule, "instance_methods", rb_class_instance_methods, -1); /* in class.c */
-    rb_objc_define_method(rb_cModule, "public_instance_methods", 
+    rb_objc_define_method(rb_cModule, "public_instance_methods",
 		     rb_class_public_instance_methods, -1);    /* in class.c */
-    rb_objc_define_method(rb_cModule, "protected_instance_methods", 
+    rb_objc_define_method(rb_cModule, "protected_instance_methods",
 		     rb_class_protected_instance_methods, -1); /* in class.c */
-    rb_objc_define_method(rb_cModule, "private_instance_methods", 
+    rb_objc_define_method(rb_cModule, "private_instance_methods",
 		     rb_class_private_instance_methods, -1);   /* in class.c */
 
     VALUE rb_mod_constants(VALUE, SEL, int, VALUE *);
@@ -3196,16 +3196,16 @@ Init_Object(void)
     rb_objc_define_method(rb_cModule, "const_get", rb_mod_const_get, -1);
     rb_objc_define_method(rb_cModule, "const_set", rb_mod_const_set, 2);
     rb_objc_define_method(rb_cModule, "const_defined?", rb_mod_const_defined, -1);
-    rb_objc_define_private_method(rb_cModule, "remove_const", 
+    rb_objc_define_private_method(rb_cModule, "remove_const",
 			     rb_mod_remove_const_imp, 1); /* in variable.c */
     VALUE rb_mod_const_missing(VALUE, SEL, VALUE);
-    rb_objc_define_method(rb_cModule, "const_missing", 
+    rb_objc_define_method(rb_cModule, "const_missing",
 		     rb_mod_const_missing, 1); /* in variable.c */
     VALUE rb_mod_class_variables(VALUE, SEL);
-    rb_objc_define_method(rb_cModule, "class_variables", 
+    rb_objc_define_method(rb_cModule, "class_variables",
 		     rb_mod_class_variables, 0); /* in variable.c */
     VALUE rb_mod_remove_cvar(VALUE, SEL, VALUE);
-    rb_objc_define_method(rb_cModule, "remove_class_variable", 
+    rb_objc_define_method(rb_cModule, "remove_class_variable",
 		     rb_mod_remove_cvar, 1); /* in variable.c */
     rb_objc_define_method(rb_cModule, "class_variable_get", rb_mod_cvar_get, 1);
     rb_objc_define_method(rb_cModule, "class_variable_set", rb_mod_cvar_set, 2);

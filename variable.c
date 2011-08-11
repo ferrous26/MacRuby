@@ -1507,9 +1507,11 @@ retry:
 	tmp = rb_cObject;
 	goto retry;
     }
-    VALUE k = retrieve_dynamic_objc_class(klass, id);
-    if (k != Qnil) {
+    if (recurse || klass == rb_cObject) {
+      VALUE k = retrieve_dynamic_objc_class(klass, id);
+      if (k != Qnil) {
 	return k;
+      }
     }
     return call_const_missing(klass, id);
 }
@@ -1712,9 +1714,11 @@ rb_const_defined_0(VALUE klass, ID id, int exclude, int recurse)
 	tmp = rb_cObject;
 	goto retry;
     }
-    VALUE k = retrieve_dynamic_objc_class(klass, id);
-    if (k != Qnil) {
-	return Qtrue;
+    if (recurse || klass == rb_cObject) {
+      VALUE k = retrieve_dynamic_objc_class(klass, id);
+      if (k != Qnil) {
+        return Qtrue;
+      }
     }
     return Qfalse;
 }

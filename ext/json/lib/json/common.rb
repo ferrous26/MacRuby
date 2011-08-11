@@ -57,7 +57,6 @@ module JSON
                      when :Array      then :NSArray
                      when :Hash       then :NSDictionary
                      when :String     then :NSString
-                     when :JSONObject then :Object
                      else const
                      end
         klass = deep_const_get(real_const)

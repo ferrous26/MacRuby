@@ -20,7 +20,9 @@ module WEBrick
       Ruby = File::join(RbConfig::CONFIG['bindir'],
                         RbConfig::CONFIG['ruby_install_name'])
       Ruby << RbConfig::CONFIG['EXEEXT']
-      CGIRunner = "\"#{Ruby}\" \"#{WEBrick::Config::LIBDIR}/httpservlet/cgi_runner.rb\""
+      cgi_runner = "#{WEBrick::Config::LIBDIR}/httpservlet/cgi_runner"
+      cgi_runner << (File.exists?("#{cgi_runner}.rbo") ? '.rbo' : '.rb')
+      CGIRunner  = "\"#{Ruby}\" \"#{cgi_runner}\""
 
       def initialize(server, name)
         super(server, name)

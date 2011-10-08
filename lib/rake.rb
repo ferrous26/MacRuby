@@ -1009,6 +1009,7 @@ module FileUtils
     end
   end
 
+  # XXX MACRUBY
   def rake_system(*cmd)
     system(*cmd)
   end
@@ -1236,6 +1237,7 @@ module Rake
     # methods and wrap them in a new FileList object.  We enumerate these
     # methods in the +SPECIAL_RETURN+ list below.
 
+    # XXX MACRUBY We are also taking :<=> out of the delegated methods
     # List of array methods (that are not in +Object+) that need to be
     # delegated.
     ARRAY_METHODS = (Array.instance_methods - (Object.instance_methods - [:<=>])).map { |n| n.to_s }
@@ -1261,11 +1263,13 @@ module Rake
     DELEGATING_METHODS.each_with_index do |sym, i|
       if SPECIAL_RETURN.include?(sym)
         define_method(sym) do |*args, &block|
+        # XXX MACRUBY Use #define_method instead of #class_eval
           resolve
           result = @items.send(sym, *args, &block)
           FileList.new.import(result)
         end
       else
+        # XXX MACRUBY Use #define_method instead of #class_eval
         define_method(sym) do |*args, &block|
           resolve
           result = @items.send(sym, *args, &block)

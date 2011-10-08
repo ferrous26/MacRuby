@@ -11,7 +11,7 @@ You can freely distribute/modify this library.
 
 This is a simple example.
 
-  require 'monitor.rb'
+  require 'monitor'
 
   buf = []
   buf.extend(MonitorMixin)

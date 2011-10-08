@@ -47,7 +47,7 @@ the return array (or yielded to the block, if a block was given).
 
 ==Basic usage
 
-   require 'scanf.rb'
+   require 'scanf'
 
    # String#scanf and IO#scanf take a single argument (a format string)
    array = aString.scanf("%d%s")

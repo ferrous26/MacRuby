@@ -8,7 +8,7 @@
 #
 # $IPR: erbhandler.rb,v 1.25 2003/02/24 19:25:31 gotoyuzo Exp $
 
-require 'webrick/httpservlet/abstract.rb'
+require 'webrick/httpservlet/abstract'
 
 require 'erb'
 

@@ -9,9 +9,9 @@
 #
 #
 
-require "cmath.rb"
-require "matrix.rb"
-require "prime.rb"
+require "cmath"
+require "matrix"
+require "prime"
 
 # require "mathn/rational"
 # require "mathn/complex"

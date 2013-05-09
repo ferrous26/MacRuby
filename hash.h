@@ -1,7 +1,7 @@
 /*
  * MacRuby Hash.
  *
- * Copyright (C) 2012, The MacRuby Team. All rights reserved.
+ * Copyright (C) 2012-2013, The MacRuby Team. All rights reserved.
  * Copyright (C) 2011, Apple Inc. All rights reserved.
  */
 
